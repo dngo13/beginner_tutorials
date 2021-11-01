@@ -14,3 +14,45 @@ Must have the following installed:
 - ROS Melodic
 - C++, roscpp
 - Standard library
+
+## Building Instructions
+Create catkin workspace. Go to terminal and follow these commands:
+```
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin_make
+```
+Then source the setup.bash file with this command:
+```
+source devel/setup.bash
+```
+Now please clone the beginner_tutorials package by doing the following:
+```
+cd src/
+git clone https://github.com/dngo13/beginner_tutorials.git
+cd ..
+catkin_make
+source devel/setup.bash
+```
+
+## Running the Program
+Now that the package is built, we can run the program. 
+In this terminal, run ```roscore```.
+Open a new terminal, source it with:
+```
+source devel/setup.bash
+```
+And then run:
+```
+rosrun beginner_tutorials talker
+```
+
+Now, open a new terminal again, source it with:
+```
+source devel/setup.bash
+```
+And then run:
+```
+rosrun beginner_tutorials listener
+```
+You should see output in both terminals similar to ENPM808X ROS count: # and I heard: [ENPM808X ROS count: #]
