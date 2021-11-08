@@ -2,8 +2,8 @@
  * @file talker.cpp
  * @author Diane Ngo(dngo13)
  * @brief ROS Beginner Tutorials - Publisher
- * @version 1.0
- * @date 2021-10-31
+ * @version 2.0
+ * @date 2021-11-08
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -13,6 +13,24 @@
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/ChangeStringOutput.h"
+
+// Default string base message
+std::string Message("ENPM808X ROS count:  ");
+
+/**
+ * @brief Callback function for the service to change the string output
+ * 
+ * @param req Request
+ * @param res Reponse
+ * @return bool if there is a request to change the string
+ */
+bool change_string(beginner_tutorials::ChangeStringOutput::Request  &request,
+beginner_tutorials::ChangeStringOutput::Response &response) {
+  Message = request.baseString;
+  response.newString = "Service called to update string output!";
+  return true;
+}
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -58,6 +76,9 @@ int main(int argc, char **argv) {
 
   ros::Rate loop_rate(10);
 
+  // Start service server for ChangeStringOutput
+  ros::ServiceServer server = n.advertiseService("ChangeStringOutput", change_string);
+
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
@@ -70,7 +91,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "ENPM808X ROS count:  " << count;
+    ss << Message << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
