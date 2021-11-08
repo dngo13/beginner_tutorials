@@ -2,10 +2,10 @@
  * @file listener.cpp
  * @author Diane Ngo (dngo13)
  * @brief ROS Beginner Tutorials - Subscriber
- * @version 1.0
- * @date 2021-10-31
+ * @version 2.0
+ * @date 2021-11-08
  * 
- * @copyright Copyright (c) 2021
+ * @copyright BSD 2 (c) 2021
  * 
  */
 
@@ -32,6 +32,9 @@ int main(int argc, char **argv) {
    * part of the ROS system.
    */
   ros::init(argc, argv, "listener");
+
+  // INFO logger for node start
+  ROS_INFO_STREAM_ONCE("Starting listener node. ");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.

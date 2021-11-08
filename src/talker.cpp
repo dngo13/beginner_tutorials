@@ -5,7 +5,7 @@
  * @version 2.0
  * @date 2021-11-08
  * 
- * @copyright Copyright (c) 2021
+ * @copyright BSD 2 (c) 2021
  * 
  */
 
@@ -15,9 +15,6 @@
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ChangeStringOutput.h"
 
-// Default string base message
-std::string Message("ENPM808X ROS count:  ");
-
 /**
  * @brief Callback function for the service to change the string output
  * 
@@ -25,11 +22,16 @@ std::string Message("ENPM808X ROS count:  ");
  * @param res Reponse
  * @return bool if there is a request to change the string
  */
-bool change_string(beginner_tutorials::ChangeStringOutput::Request  &request,
-beginner_tutorials::ChangeStringOutput::Response &response) {
-  Message = request.baseString;
-  response.newString = "Service called to update string output!";
-  return true;
+bool change_string(beginner_tutorials::ChangeStringOutput::Request request,
+beginner_tutorials::ChangeStringOutput::Response response) {
+  if (!request.baseString.empty()) {
+    Message = request.baseString;
+    response.newString = "Service called to update string output!";
+    ROS_WARN_STREAM_ONCE("String has been updated.");
+    return true;
+  } else {
+    ROS_ERROR_STREAM("New string cannot be empty. Will not be updated.");
+    return false; }
 }
 
 /**
@@ -47,6 +49,9 @@ int main(int argc, char **argv) {
    * part of the ROS system.
    */
   ros::init(argc, argv, "talker");
+
+  // INFO logger for node start
+  ROS_INFO_STREAM_ONCE("Starting talker node. ");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
@@ -74,10 +79,30 @@ int main(int argc, char **argv) {
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-  ros::Rate loop_rate(10);
+  // Default frequency is 10Hz
+  int frequency = 10;
+  // Passing argument from terminal and converting it from string to int
+  if (argc == 2) {
+    frequency = atoi(argv[1]);
+    ROS_WARN_STREAM("Frequency set to: " << frequency);
+  }
+  // Checks if frequency is negative. Terminates program.
+  if (frequency <= 0) {
+    ROS_FATAL_STREAM_ONCE("ERROR: Frequency cannot be zero or negative.");
+    ros::shutdown();
+  } else if (frequency >= 25) {
+  // Checks if frequency is greater than 25
+    ROS_ERROR_STREAM("Frequency is too high (> 25Hz).");
+  }
+  ros::Rate loop_rate(frequency);
+
+  // Default string base message
+  std::string Message("ENPM808X ROS count:  ");
 
   // Start service server for ChangeStringOutput
-  ros::ServiceServer server = n.advertiseService("ChangeStringOutput", change_string);
+  ros::ServiceServer server = n.advertiseService("ChangeStringOutput",
+  change_string);
+  ROS_DEBUG_STREAM("Starting ChangeStringOutput service");
 
   /**
    * A count of how many messages we have sent. This is used to create
