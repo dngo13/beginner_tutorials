@@ -14,8 +14,19 @@ Must have the following installed:
 - ROS Melodic
 - C++, roscpp
 - Standard library
+- rqt_console 
+- xterm (runs the subscriber in another terminal)
 
+### Installing rqt console
+```
+sudo apt-get install ros-melodic-rqt ros-melodic-rqt-common-plugins
+```
+### Installing xterm
+```
+sudo apt install xterm
+```
 ## Building Instructions
+### If there is no catkin workspace
 Create catkin workspace. Go to terminal and follow these commands:
 ```
 mkdir -p ~/catkin_ws/src
@@ -34,10 +45,19 @@ cd ..
 catkin_make
 source devel/setup.bash
 ```
-
+### Cloning into an existing catkin workspace
+Go to the src directory for the catkin workspace. And then follow these steps
+```
+cd ~/catkin_ws/src/
+git clone https://github.com/dngo13/beginner_tutorials.git
+cd ..
+catkin_make
+source devel/setup.bash
+```
 ## Running the Program
 Now that the package is built, we can run the program. 
 In this terminal, run ```roscore```.
+### Running it individually with the nodes
 Open a new terminal, source it with:
 ```
 source devel/setup.bash
@@ -56,3 +76,43 @@ And then run:
 rosrun beginner_tutorials listener
 ```
 You should see output in both terminals similar to ENPM808X ROS count: # and I heard: [ENPM808X ROS count: #]
+
+### Running the launch file
+Open a new terminal, source it with:
+```
+source devel/setup.bash
+```
+And then run:
+```
+roslaunch beginner_tutorials pub_sub_launch.launch
+```
+Alternatively, to change the frequency:
+```
+roslaunch beginner_tutorials pub_sub_launch.launch frequency:=##
+```
+Where ## is a number of your choice. Note that a 0 or a negative number will throw a fatal error and terminate the program.
+A frequency greater than 25 will give a warning.
+
+### Changing the string output
+To call the service first check if it is seen below:
+```
+rosservice list
+```
+You should see something like: 
+```
+/ChangeStringOutput
+/listener_node/get_loggers
+/listener_node/set_logger_level
+/rosout/get_loggers
+/rosout/set_logger_level
+/rqt_gui_py_node_11776/get_loggers
+/rqt_gui_py_node_11776/set_logger_level
+/rqt_gui_py_node_11824/get_loggers
+/rqt_gui_py_node_11824/set_logger_level
+/talker_node/get_loggers
+/talker_node/set_logger_level
+```
+Then, run the command below to change the text, with anything between the quotes as your desired output.
+```
+rosservice call /ChangeStringOutput "New Message" 
+```
