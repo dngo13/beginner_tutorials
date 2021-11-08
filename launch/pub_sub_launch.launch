@@ -14,7 +14,6 @@
         pkg="beginner_tutorials"
         name="listener_node"
         type="listener"
-        respawn="true"
-        output="screen"
+        launch-prefix="xterm -e"
     />
 </launch>
