@@ -14,6 +14,11 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ChangeStringOutput.h"
+#include <tf/transform_broadcaster.h>
+
+
+// Default string base message
+extern std::string Message("ENPM808X ROS count:  ");
 
 /**
  * @brief Callback function for the service to change the string output
@@ -22,8 +27,8 @@
  * @param res Reponse
  * @return bool if there is a request to change the string
  */
-bool change_string(beginner_tutorials::ChangeStringOutput::Request request,
-beginner_tutorials::ChangeStringOutput::Response response) {
+bool change_string(beginner_tutorials::ChangeStringOutput::Request &request,
+beginner_tutorials::ChangeStringOutput::Response &response) {
   if (!request.baseString.empty()) {
     Message = request.baseString;
     response.newString = "Service called to update string output!";
@@ -96,8 +101,7 @@ int main(int argc, char **argv) {
   }
   ros::Rate loop_rate(frequency);
 
-  // Default string base message
-  std::string Message("ENPM808X ROS count:  ");
+
 
   // Start service server for ChangeStringOutput
   ros::ServiceServer server = n.advertiseService("ChangeStringOutput",
@@ -109,6 +113,23 @@ int main(int argc, char **argv) {
    * a unique string for each message.
    */
   int count = 0;
+
+  // Creating transform broadcaster
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+  tf::Quaternion q;
+  // Sets origin of frame
+  transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()), cos(ros::Time::now().toSec()), 0));
+  
+
+  // Set non-zero translation
+  q.setRPY(0, 0, 1);
+  // Set non-zero rotation for frame
+  transform.setRotation(q);
+
+  // Publishes transform with parent frame /world and child frame /talk
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
