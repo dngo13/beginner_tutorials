@@ -114,23 +114,23 @@ int main(int argc, char **argv) {
    */
   int count = 0;
 
-  // Creating transform broadcaster
-  static tf::TransformBroadcaster br;
-  tf::Transform transform;
-  tf::Quaternion q;
-  // Sets origin of frame
-  transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()), cos(ros::Time::now().toSec()), 0));
-  
-
-  // Set non-zero translation
-  q.setRPY(0, 0, 1);
-  // Set non-zero rotation for frame
-  transform.setRotation(q);
-
-  // Publishes transform with parent frame /world and child frame /talk
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 
   while (ros::ok()) {
+    // Creating transform broadcaster
+    static tf::TransformBroadcaster br;
+    tf::Transform transform;
+    tf::Quaternion q;
+    // Sets origin of frame
+    transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()), cos(ros::Time::now().toSec()), 0));
+    
+
+    // Set non-zero translation
+    q.setRPY(0, 0, 1);
+    // Set non-zero rotation for frame
+    transform.setRotation(q);
+
+    // Publishes transform with parent frame /world and child frame /talk
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
