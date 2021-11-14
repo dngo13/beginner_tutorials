@@ -116,3 +116,31 @@ Then, run the command below to change the text, with anything between the quotes
 ```
 rosservice call /ChangeStringOutput "New Message" 
 ```
+
+### View rosbag file 
+There is a rosbag file already recorded in the /results directory. To view it, do the following commands in a terminal.
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+cd src/beginner_tutorials/results
+rosbag info rosbag_record.bag 
+```
+
+The output should be this: 
+```
+path:        rosbag_record.bag
+version:     2.0
+duration:    15.0s
+start:       Nov 14 2021 17:47:16.61 (1636930036.61)
+end:         Nov 14 2021 17:47:31.57 (1636930051.57)
+size:        184.1 KB
+messages:    876
+compression: none [1/1 chunks]
+types:       rosgraph_msgs/Log  [acffd30cd6b6de30f120938c17c593fb]
+             std_msgs/String    [992ce8a1687cec8c8bd883ec73ca41d1]
+             tf2_msgs/TFMessage [94810edda583a504dfda3829e70d7eec]
+topics:      /chatter      147 msgs    : std_msgs/String   
+             /rosout       293 msgs    : rosgraph_msgs/Log  (3 connections)
+             /rosout_agg   289 msgs    : rosgraph_msgs/Log 
+             /tf           147 msgs    : tf2_msgs/TFMessage
+```
