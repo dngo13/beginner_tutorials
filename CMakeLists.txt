@@ -216,5 +216,7 @@ target_link_libraries(listener ${catkin_LIBRARIES})
 add_dependencies(listener beginner_tutorials_generate_messages_cpp)
 
 if (CATKIN_ENABLE_TESTING)
-  catkin_add_gtest(beginner_tutorials test/BeginnerTutorialsTest.cpp)
+  find_package(rostest REQUIRED)
+  add_rostest_gtest(BeginnerTutorialsTest test/BeginnerTutorialsTestLaunch.launch test/BeginnerTutorialsTest.cpp)
+  target_link_libraries(BeginnerTutorialsTest ${catkin_LIBRARIES})
 endif()

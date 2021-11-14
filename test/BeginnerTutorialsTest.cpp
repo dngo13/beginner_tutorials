@@ -9,17 +9,20 @@
  * 
  */
 
-#include <gtest/gtest.h>
 #include <ros/ros.h>
+#include <ros/service_client.h>
+#include <gtest/gtest.h>
 #include "beginner_tutorials/ChangeStringOutput.h"
 
+/**
+ * @brief Tests if the service for the change string output exists
+ * @param TalkerNode gtest suite
+ * @param testTalkerExists name of test
+ */
 TEST(TalkerNode, testTalkerExists) {
     ros::NodeHandle nh;
-
     ros::ServiceClient client = nh.serviceClient<beginner_tutorials::ChangeStringOutput>("change_string");
-
-    bool exist(client.waitForExistence(ros::Duration(10)));
-    EXPECT_FALSE(exist);
+    EXPECT_TRUE(client.waitForExistence(ros::Duration(10)));
 }
 
 int main(int argc, char **argv) {
