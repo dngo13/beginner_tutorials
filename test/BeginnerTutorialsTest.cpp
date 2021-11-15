@@ -1,11 +1,11 @@
 /**
  * @file BeginnerTutorialsTest.cpp
  * @author Diane Ngo (dngo13)
- * @brief 
- * @version 0.1
+ * @brief Test file for seeing if service exists
+ * @version 1.0
  * @date 2021-11-13
  * 
- * @copyright Copyright (c) 2021
+ * @copyright BSD 2 (c) 2021
  * 
  */
 

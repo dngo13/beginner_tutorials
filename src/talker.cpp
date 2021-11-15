@@ -2,8 +2,8 @@
  * @file talker.cpp
  * @author Diane Ngo(dngo13)
  * @brief ROS Beginner Tutorials - Publisher
- * @version 2.0
- * @date 2021-11-08
+ * @version 3.0
+ * @date 2021-11-15
  * 
  * @copyright BSD 2 (c) 2021
  * 
