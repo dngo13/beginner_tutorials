@@ -116,8 +116,21 @@ Then, run the command below to change the text, with anything between the quotes
 ```
 rosservice call /ChangeStringOutput "New Message" 
 ```
+### Viewing TF Frames
+To view tf frames, ensure the talker is running by making sure the launch file is running:
+1st terminal: ```roscore```
+2nd terminal:
+```
+roslaunch beginner_tutorials pub_sub_launch.launch
+```
+3rd terminal:
+```
+rosrun rqt_tf_tree rqt_tf_tree
+```
+Also the pdf file for the frames (frames.pdf) is pregenerated and inside the /results directory.
 
-### Running Gtest/rostest 
+
+### Running rostest 
 To run the test, ensure you are in the catkin workspace first and run the below.
 ```
 cd ~/catkin_ws/ 
@@ -150,7 +163,7 @@ cd src/beginner_tutorials/results
 rosbag info rosbag_record.bag 
 ```
 
-The output should be this: 
+The output should be similar to this: 
 ```
 path:        rosbag_record.bag
 version:     2.0
@@ -173,4 +186,18 @@ topics:      /chatter      147 msgs    : std_msgs/String
 If you want to record a new bag file then launch the launch file with the following argument like below:
 ```
 roslaunch beginner_tutorials pub_sub_launch.launch record_bag:=True
+```
+To disable bag recording, just ignore the record_bag param as the default value is set to false in the launch file.
+
+### Verify Listener and Rosbag play
+Open a terminal and start ```roscore```.
+Then in a new terminal:
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+rosbag play src/beginner_tutorials/results/rosbag_record.bag
+```
+In a third terminal:
+```
+rosrun beginner_tutorials listener
 ```
