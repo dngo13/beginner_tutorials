@@ -117,6 +117,30 @@ Then, run the command below to change the text, with anything between the quotes
 rosservice call /ChangeStringOutput "New Message" 
 ```
 
+### Running Gtest/rostest 
+To run the test, ensure you are in the catkin workspace first and run the below.
+```
+cd ~/catkin_ws/ 
+catkin_make run_tests
+```
+Ctrl-c to end the script. 
+You should see an output similar to: 
+```
+[Testcase: testbeginner_tutorials_test] ... ok
+
+[ROSTEST]-----------------------------------------------------------------------
+
+[beginner_tutorials.rosunit-beginner_tutorials_test/testTalkerExists][passed]
+
+SUMMARY
+ * RESULT: SUCCESS
+ * TESTS: 1
+ * ERRORS: 0
+ * FAILURES: 0
+
+rostest log file is in /home/diane/.ros/log/rostest-diane-laptop-linux-19937.log
+```
+
 ### View rosbag file 
 There is a rosbag file already recorded in the /results directory. To view it, do the following commands in a terminal.
 ```
@@ -143,4 +167,10 @@ topics:      /chatter      147 msgs    : std_msgs/String
              /rosout       293 msgs    : rosgraph_msgs/Log  (3 connections)
              /rosout_agg   289 msgs    : rosgraph_msgs/Log 
              /tf           147 msgs    : tf2_msgs/TFMessage
+```
+
+#### Recording a New Bag File
+If you want to record a new bag file then launch the launch file with the following argument like below:
+```
+roslaunch beginner_tutorials pub_sub_launch.launch record_bag:=True
 ```
