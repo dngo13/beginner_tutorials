@@ -21,7 +21,8 @@
  */
 TEST(TalkerNode, testTalkerExists) {
     ros::NodeHandle nh;
-    ros::ServiceClient client = nh.serviceClient<beginner_tutorials::ChangeStringOutput>("change_string");
+    ros::ServiceClient client = nh.serviceClient<beginner_tutorials::
+        ChangeStringOutput>("change_string");
     EXPECT_TRUE(client.waitForExistence(ros::Duration(10)));
 }
 

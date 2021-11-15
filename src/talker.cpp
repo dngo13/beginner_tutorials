@@ -10,11 +10,11 @@
  */
 
 // ROS Headers
+#include <tf/transform_broadcaster.h>
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ChangeStringOutput.h"
-#include <tf/transform_broadcaster.h>
 
 
 // Default string base message
@@ -121,8 +121,8 @@ int main(int argc, char **argv) {
     tf::Transform transform;
     tf::Quaternion q;
     // Sets origin of frame
-    transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()), cos(ros::Time::now().toSec()), 0));
-    
+    transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()),
+      cos(ros::Time::now().toSec()), 0));
 
     // Set non-zero translation
     q.setRPY(0, 0, 1);
@@ -130,7 +130,8 @@ int main(int argc, char **argv) {
     transform.setRotation(q);
 
     // Publishes transform with parent frame /world and child frame /talk
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+    br.sendTransform(tf::StampedTransform(transform,
+      ros::Time::now(), "world", "talk"));
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */

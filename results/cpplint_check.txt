@@ -6,3 +6,13 @@ Edit: Week10_HW Update
 
 Done processing listener.cpp
 Done processing talker.cpp
+
+-----
+Edit: Week11_HW Update
+
+Done processing src/listener.cpp
+src/talker.cpp:30:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::ChangeStringOutput::Request &request  [runtime/references] [2]
+src/talker.cpp:31:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::ChangeStringOutput::Response &response  [runtime/references] [2]
+Done processing src/talker.cpp
+Done processing test/BeginnerTutorialsTest.cpp
+Total errors found: 2
